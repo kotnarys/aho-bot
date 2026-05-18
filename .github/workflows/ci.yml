@@ -1,0 +1,104 @@
+name: AHO Bot CI/CD
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+env:
+  PYTHON_VERSION: "3.12"
+
+jobs:
+  # ── Lint & Type Check ─────────────────────────────
+  lint:
+    name: Lint & Format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install linters
+        run: pip install ruff mypy
+
+      - name: Ruff check
+        run: ruff check app/ tests/ --select E,W,F,I --ignore E501
+
+      - name: Ruff format check
+        run: ruff format --check app/ tests/ || true
+
+  # ── Unit Tests ────────────────────────────────────
+  test-unit:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio
+
+      - name: Run unit tests (tools + schemas)
+        run: |
+          pytest tests/test_core.py -v --tb=short
+          pytest tests/test_evals.py -v -k "TestToolExecution" --tb=short
+
+  # ── Integration / Eval Tests ──────────────────────
+  test-evals:
+    name: Eval Tests (LLM)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [lint, test-unit]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio
+
+      - name: Run eval tests
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_BASE_URL: "https://openrouter.ai/api/v1"
+          MODEL_NAME: "google/gemini-2.5-flash"
+        run: pytest tests/test_evals.py -v --tb=long -x
+
+  # ── Docker Build ──────────────────────────────────
+  docker:
+    name: Docker Build
+    runs-on: ubuntu-latest
+    needs: [lint, test-unit]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t aho-bot:${{ github.sha }} .
+
+      - name: Test container starts
+        run: |
+          docker run -d --name aho-test \
+            -e OPENAI_API_KEY=test-key \
+            -e OPENAI_BASE_URL=https://openrouter.ai/api/v1 \
+            -p 8000:8000 \
+            aho-bot:${{ github.sha }}
+          sleep 5
+          curl -sf http://localhost:8000/api/health || (docker logs aho-test && exit 1)
+          docker stop aho-test

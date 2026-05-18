@@ -1,0 +1,17 @@
+[
+  {"id": 1, "name": "Иванов Алексей Сергеевич", "email": "a.ivanov@company.ru", "department": "Разработка", "position": "Тимлид", "manager": "Козлова Елена Дмитриевна", "office": "Центральный офис (Москва-Сити)"},
+  {"id": 2, "name": "Петрова Мария Александровна", "email": "m.petrova@company.ru", "department": "Маркетинг", "position": "Маркетолог", "manager": "Сидоров Дмитрий Игоревич", "office": "Центральный офис (Москва-Сити)"},
+  {"id": 3, "name": "Козлова Елена Дмитриевна", "email": "e.kozlova@company.ru", "department": "Разработка", "position": "CTO", "manager": "Генеральный директор", "office": "Центральный офис (Москва-Сити)"},
+  {"id": 4, "name": "Сидоров Дмитрий Игоревич", "email": "d.sidorov@company.ru", "department": "Маркетинг", "position": "Head of Marketing", "manager": "Генеральный директор", "office": "Центральный офис (Москва-Сити)"},
+  {"id": 5, "name": "Новикова Анна Павловна", "email": "a.novikova@company.ru", "department": "HR", "position": "HR-менеджер", "manager": "Кузнецова Ольга Николаевна", "office": "Центральный офис (Москва-Сити)"},
+  {"id": 6, "name": "Кузнецова Ольга Николаевна", "email": "o.kuznetsova@company.ru", "department": "HR", "position": "HR Director", "manager": "Генеральный директор", "office": "Центральный офис (Москва-Сити)"},
+  {"id": 7, "name": "Волков Артём Михайлович", "email": "a.volkov@company.ru", "department": "Продажи", "position": "Менеджер по продажам", "manager": "Лебедев Игорь Васильевич", "office": "Центральный офис (Москва-Сити)"},
+  {"id": 8, "name": "Лебедев Игорь Васильевич", "email": "i.lebedev@company.ru", "department": "Продажи", "position": "Head of Sales", "manager": "Генеральный директор", "office": "Центральный офис (Москва-Сити)"},
+  {"id": 9, "name": "Морозов Кирилл Андреевич", "email": "k.morozov@company.ru", "department": "Логистика", "position": "Логист", "manager": "Федорова Наталья Сергеевна", "office": "Склад (Химки)"},
+  {"id": 10, "name": "Федорова Наталья Сергеевна", "email": "n.fedorova@company.ru", "department": "Логистика", "position": "Руководитель логистики", "manager": "Генеральный директор", "office": "Склад (Химки)"},
+  {"id": 11, "name": "Соколов Максим Юрьевич", "email": "m.sokolov@company.ru", "department": "Бухгалтерия", "position": "Бухгалтер", "manager": "Попова Татьяна Викторовна", "office": "Центральный офис (Москва-Сити)"},
+  {"id": 12, "name": "Попова Татьяна Викторовна", "email": "t.popova@company.ru", "department": "Бухгалтерия", "position": "Главный бухгалтер", "manager": "Генеральный директор", "office": "Центральный офис (Москва-Сити)"},
+  {"id": 13, "name": "Андреев Павел Олегович", "email": "p.andreev@company.ru", "department": "IT-поддержка", "position": "Сисадмин", "manager": "Козлова Елена Дмитриевна", "office": "Сервис-центр (Южнопортовая)"},
+  {"id": 14, "name": "Григорьев Роман Дмитриевич", "email": "r.grigoriev@company.ru", "department": "Разработка", "position": "Backend-разработчик", "manager": "Иванов Алексей Сергеевич", "office": "Центральный офис (Москва-Сити)"},
+  {"id": 15, "name": "Орлова Дарья Константиновна", "email": "d.orlova@company.ru", "department": "Дизайн", "position": "UI/UX дизайнер", "manager": "Сидоров Дмитрий Игоревич", "office": "Центральный офис (Москва-Сити)"}
+]
