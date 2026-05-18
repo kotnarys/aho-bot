@@ -74,13 +74,11 @@ class TestDialogFlows:
             "В центральный офис",
             "Да, всё верно",
         ])
-        # After first message: should be collecting
-        _, state1, _ = results[0]
-        assert state1.current_intent == IntentType.OFFICE_SUPPLIES
-
-        # After confirmation: should be done
+        # After last message: should be done with a submitted request
         _, state_final, _ = results[-1]
         assert state_final.step == "done"
+        assert len(state_final.requests_history) > 0
+        assert state_final.requests_history[-1].get("type") == "office_supplies"
 
     def test_taxi_with_details(self):
         """Taxi order with all details in one message."""
